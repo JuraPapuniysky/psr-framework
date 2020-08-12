@@ -5,7 +5,8 @@ use Narrowspark\HttpEmitter\SapiEmitter;;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$container = new \DI\Container();
+$container = require __DIR__ . '/../config/container.php';
+
 $app = new Application($container);
 
 $request = \Laminas\Diactoros\ServerRequestFactory::fromGlobals();
