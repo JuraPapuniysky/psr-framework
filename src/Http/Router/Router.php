@@ -74,20 +74,21 @@ class Router implements MiddlewareInterface
             case Dispatcher::NOT_FOUND:
                 $code = 404;
                 $message = 'Not found';
+
                 return new JsonResponse($message, $code);
-                break;
             case Dispatcher::METHOD_NOT_ALLOWED:
                 $code = 403;
                 $message = 'Method not allowed';
+
                 return new JsonResponse($message, $code);
             case Dispatcher::FOUND:
-                $handler = $routeInfo[1];
+                $controllerHandler = $routeInfo[1];
                 $vars['request'] = $request;
                 foreach ($routeInfo[2] as $varName => $value) {
                     $vars[$varName] = $value;
                 }
 
-                return $this->invoker->call($handler, $vars);
+                return $this->invoker->call($controllerHandler, $vars);
         }
     }
 }
