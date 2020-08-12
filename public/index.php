@@ -1,9 +1,13 @@
 <?php
 
 use PsrFramework\Http\Application;
-use Narrowspark\HttpEmitter\SapiEmitter;;
+use Narrowspark\HttpEmitter\SapiEmitter;
+use Dotenv\Dotenv;
 
 require __DIR__ . '/../vendor/autoload.php';
+
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
 
 $container = require __DIR__ . '/../config/container.php';
 
@@ -18,4 +22,5 @@ $response = $app->handle($request);
 
 $emitter = new SapiEmitter();
 $emitter->emit($response);
+
 
