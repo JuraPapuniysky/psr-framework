@@ -10,7 +10,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use PsrFramework\Http\Controller\Controller;
 
-
 class HelloController extends Controller
 {
     private HelloService $helloService;
@@ -20,16 +19,19 @@ class HelloController extends Controller
         $this->helloService = $helloService;
     }
 
-    public function index(ServerRequestInterface $request, $name): ResponseInterface
+    public function index(ServerRequestInterface $request, string $name): ResponseInterface
     {
         return new JsonResponse([
-            'message' => $this->helloService->sayHello($request->getAttribute('authUser'))
+            'message' => $this->helloService->sayHello($name)
         ], 200);
     }
 
     public function post(ServerRequestInterface $request): ResponseInterface
     {
-        return new JsonResponse(json_decode($request->getBody()->getContents()), 200);
+        return new JsonResponse([
+            'body' => json_decode($request->getBody()->getContents()),
+            'authUser' => $request->getAttribute('authUser'),
+        ], 200);
     }
 
     public function error(ServerRequestInterface $request): ResponseInterface
