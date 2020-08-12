@@ -23,7 +23,7 @@ class HelloController extends Controller
     public function index(ServerRequestInterface $request, $name): ResponseInterface
     {
         return new JsonResponse([
-            'message' => $this->helloService->sayHello($request->getAttribute('auth_user'))
+            'message' => $this->helloService->sayHello($request->getAttribute('authUser'))
         ], 200);
     }
 

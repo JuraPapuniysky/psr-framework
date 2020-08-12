@@ -14,6 +14,6 @@ class JwtAuthMiddleware implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $userName = $request->getHeaderLine('Authorization');
-        return $handler->handle($request->withAttribute('auth_user', $userName));
+        return $handler->handle($request->withAttribute('authUser', $userName));
     }
 }
