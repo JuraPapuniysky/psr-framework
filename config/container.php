@@ -6,7 +6,7 @@ $container = new Container();
 
 $config = require __DIR__.'/config.php';
 
-foreach ($config['singletones'] as $name => $value) {
+foreach ($config['dependencies'] as $name => $value) {
     $container->set($name, $value);
 }
 

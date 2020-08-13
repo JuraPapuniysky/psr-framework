@@ -26,7 +26,6 @@ class ErrorMiddleware implements MiddlewareInterface
            return $handler->handle($request);
         } catch (\Throwable $e) {
             $this->logger->error($e->getMessage(), [
-                'code' => $e->getCode(),
                 'trace' => $e->getTrace()
             ]);
 

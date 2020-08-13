@@ -8,9 +8,8 @@ use App\Services\HelloService;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use PsrFramework\Http\Controller\Controller;
 
-class HelloController extends Controller
+class HelloController
 {
     private HelloService $helloService;
 
