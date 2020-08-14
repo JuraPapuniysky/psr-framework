@@ -23,4 +23,13 @@ abstract class BaseRepository
             $this->entityManager->flush();
         }
     }
+
+    public function delete(object $entity, bool $flash = true): void
+    {
+        $this->entityManager->remove($entity);
+
+        if ($flash === true) {
+            $this->entityManager->flush();
+        }
+    }
 }

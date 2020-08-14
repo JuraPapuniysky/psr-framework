@@ -9,3 +9,4 @@ $app->post('hello_error', '/api/v1/hello/error', [\App\Controllers\HelloControll
 
 //AuthController routes
 $app->post('registration', '/api/v1/auth/registration', [\App\Controllers\AuthController::class, 'registration']);
+$app->post('auth', '/api/v1/auth', [\App\Controllers\AuthController::class, 'auth']);

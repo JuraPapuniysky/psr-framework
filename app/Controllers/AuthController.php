@@ -10,7 +10,7 @@ use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class AuthController
+final class AuthController
 {
     private UserService $userService;
 
@@ -34,5 +34,21 @@ class AuthController
             'status' => 'success',
             'message' => 'Account created successfully. Please check your email to confirm.'
         ], 201);
+    }
+
+    public function auth(ServerRequestInterface $request): ResponseInterface
+    {
+        $sessionEntity = $this->userService->authUser($request);
+
+        return new JsonResponse([
+            'status' => 'sucsess',
+            'accessToken' => $sessionEntity->getAccessToken(),
+            'refreshToken' => $sessionEntity->getRefreshToken(),
+        ], 201);
+    }
+
+    public function confirm(ServerRequestInterface $request, $confirmToken): ResponseInterface
+    {
+
     }
 }

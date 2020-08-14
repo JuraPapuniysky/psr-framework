@@ -21,7 +21,9 @@ class HelloController
     public function index(ServerRequestInterface $request, string $name): ResponseInterface
     {
         return new JsonResponse([
-            'message' => $this->helloService->sayHello($name)
+            'message' => $this->helloService->sayHello($name),
+            'auth' => $request->getAttribute('authUserEntity')->getUuid(),
+            'authError' => json_encode($request->getAttribute('authError')),
         ], 200);
     }
 

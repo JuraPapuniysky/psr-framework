@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectRepository;
 use Rakit\Validation\Rule;
 
-class UniqueRule extends Rule
+final class UniqueRule extends Rule
 {
     protected $message = ":attribute :value has been used";
 

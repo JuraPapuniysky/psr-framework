@@ -7,20 +7,15 @@ namespace App\Validators;
 use App\Entities\Request\RequestEntityInterface;
 use App\Entities\UserEntity;
 use App\Validators\CustomRules\UniqueRule;
-use Rakit\Validation\Validation;
 use Rakit\Validation\Validator;
 
-class UserCreateValidator implements ValidatorInterface
+final class UserCreateValidator extends AbstractValidator implements ValidatorInterface
 {
-    private Validator $validator;
-
     private UniqueRule $uniqueRule;
-
-    private ?Validation $validation = null;
 
     public function __construct(Validator $validator, UniqueRule $uniqueRule)
     {
-        $this->validator = $validator;
+        parent::__construct($validator);
         $this->uniqueRule = $uniqueRule;
     }
 
@@ -36,7 +31,7 @@ class UserCreateValidator implements ValidatorInterface
             'confirmPassword' => $userRequestEntity->confirmPassword,
         ], [
             'email' => "required|email|unique:$uniqueClassname,email",
-            'password' => 'required|min:6',
+            'password' => 'required|min:8',
             'confirmPassword' => 'required|same:password',
         ]);
 
@@ -49,10 +44,4 @@ class UserCreateValidator implements ValidatorInterface
         return true;
     }
 
-    public function errors(): array
-    {
-        $errors = $this->validation->errors();
-
-        return $errors->firstOfAll();
-    }
 }
