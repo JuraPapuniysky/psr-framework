@@ -21,7 +21,8 @@
         "psr-4": {
             "App\\": "app/",
             "PsrFramework\\": "src/",
-            "Tests\\": "tests/"
+            "Tests\\": "tests/",
+            "DataBase\\": "database/"
         }
     },
     "require-dev": {

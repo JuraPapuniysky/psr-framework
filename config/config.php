@@ -17,7 +17,7 @@ use App\Factories\Entity\Request\RequestEntityFactory;
 
 /** @var ContainerInterface $container */
 
-$connection = require __DIR__ . '/db_connection.php';
+$db = require __DIR__ . '/db.php';
 
 return [
     'dependencies' => [
@@ -30,14 +30,14 @@ return [
 
             return $logger;
         }),
-        EntityManagerInterface::class => DI\factory(function () use($connection) {
+        EntityManagerInterface::class => DI\factory(function () use($db) {
             $isDevMode = true;
             $proxyDir = null;
             $cache = null;
             $useSimpleAnnotationReader = false;
             $config = Setup::createAnnotationMetadataConfiguration([__DIR__."/../app"], $isDevMode, $proxyDir, $cache, $useSimpleAnnotationReader);
 
-            return EntityManager::create($connection, $config);
+            return EntityManager::create($db['connection'], $config);
         }),
         UuidGeneratorInterface::class => (new UuidGeneratorFactory())(),
         PasswordHashInterface::class => (new PasswordHashFactory())(),
