@@ -8,15 +8,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectRepository;
 use Rakit\Validation\Rule;
 
-final class UniqueRule extends Rule
+final class EntityExistsRule extends Rule
 {
-    protected $message = ":attribute :value has been used";
+    protected $message = ":attribute :not found";
 
     protected $fillableParams = ['table', 'column', 'except'];
 
-    protected EntityManagerInterface $entityManager;
-
-    protected ?string $entityUuid;
+    private EntityManagerInterface $entityManager;
 
     public function __construct(EntityManagerInterface $entityManager)
     {
@@ -25,7 +23,6 @@ final class UniqueRule extends Rule
 
     public function check($value): bool
     {
-        // make sure required parameters exists
         $this->requireParameters(['table', 'column']);
 
         // getting parameters
@@ -33,24 +30,20 @@ final class UniqueRule extends Rule
         $table = $this->parameter('table');
         $except = $this->parameter('except');
 
-        if ($except !== null && $except === $value) {
+        if ($except AND $except == $value) {
             return true;
         }
 
         /** @var ObjectRepository $repository */
         $repository = $this->entityManager->getRepository($table);
         $entity = $repository->findOneBy([
-           $column => $value,
+            $column => $value,
         ]);
 
         if ($entity === null) {
-            return true;
+            return false;
         }
 
-        if ($entity->getUuid() === $except) {
-            return true;
-        }
-
-        return false;
+        return true;
     }
 }
